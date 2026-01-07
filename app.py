@@ -79,7 +79,7 @@ st.markdown(f"""
 
 # ================= HEADER =================
 st.markdown("""
-<img class="logo" src="https://www.iba-suk.edu.pk/images/logo.png" width="140">
+<img class="logo" src="https://tse2.mm.bing.net/th/id/OIP.MF2VbS9hBke5HMm_qbDiEAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" width="140">
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="title">Job Acceptance Prediction System</div>', unsafe_allow_html=True)
