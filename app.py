@@ -58,7 +58,7 @@ h1 {{
 
 # ================= HEADER =================
 st.image(
-    "https://www.iba-suk.edu.pk/images/logo.png",
+    "https://crystalpng.com/wp-content/uploads/2022/03/SIBA_Logo.png",
     width=130
 )
 
