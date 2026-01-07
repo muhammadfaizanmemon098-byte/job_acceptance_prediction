@@ -59,7 +59,8 @@ h1 {{
 # ================= HEADER =================
 st.image(
     "https://tse2.mm.bing.net/th/id/OIP.MF2VbS9hBke5HMm_qbDiEAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    width=130
+    width=130,
+    border-radius = 50
 )
 
 st.markdown("<h1>Job Acceptance Prediction System</h1>", unsafe_allow_html=True)
