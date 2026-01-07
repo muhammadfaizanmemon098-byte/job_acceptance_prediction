@@ -58,7 +58,7 @@ h1 {{
 
 # ================= HEADER =================
 st.image(
-    "https://crystalpng.com/wp-content/uploads/2022/03/SIBA_Logo.png",
+    "https://crystalpng.com/wp-content/uploads/2022/03/SIBA_Logo-600x600.png",
     width=130
 )
 
