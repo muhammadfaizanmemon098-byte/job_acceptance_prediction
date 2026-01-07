@@ -11,66 +11,85 @@ st.set_page_config(
 
 # ================= LOAD MODEL =================
 model = joblib.load("job_model.pkl")
-MODEL_ACCURACY = "85%"   # training ke baad mention ki jati hai
+MODEL_ACCURACY = "85%"
 
 # ================= SIDEBAR =================
 st.sidebar.title("⚙️ App Settings")
-
-theme = st.sidebar.toggle("🌙 Dark Mode")
-
+dark_mode = st.sidebar.toggle("🌙 Dark Mode")
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📊 Model Accuracy")
 st.sidebar.success(MODEL_ACCURACY)
 
-# ================= THEME CSS =================
-if theme:
+# ================= THEME COLORS =================
+if dark_mode:
     bg = "#0e1117"
-    text = "white"
+    text = "#ffffff"
     card = "#161b22"
+    accent = "#00c0ff"
 else:
     bg = "#f4f6f9"
     text = "#000000"
-    card = "white"
+    card = "#ffffff"
+    accent = "#004aad"
 
+# ================= GLOBAL CSS =================
 st.markdown(f"""
 <style>
-body {{
+[data-testid="stAppViewContainer"] {{
     background-color: {bg};
     color: {text};
 }}
-.main {{
+
+.card {{
     background-color: {card};
     padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    border-radius: 18px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.25);
 }}
-h1 {{
+
+.title {{
     text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: {accent};
 }}
+
+.subtitle {{
+    text-align: center;
+    font-size: 15px;
+    color: gray;
+}}
+
+.logo {{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}}
+
 .footer {{
     text-align: center;
     color: gray;
     font-size: 13px;
-    margin-top: 25px;
+    margin-top: 30px;
 }}
 </style>
 """, unsafe_allow_html=True)
 
 # ================= HEADER =================
-st.image(
-    "https://tse2.mm.bing.net/th/id/OIP.MF2VbS9hBke5HMm_qbDiEAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
-    width=130
-)
+st.markdown("""
+<img class="logo" src="https://www.iba-suk.edu.pk/images/logo.png" width="140">
+""", unsafe_allow_html=True)
 
-st.markdown("<h1>Job Acceptance Prediction System</h1>", unsafe_allow_html=True)
-st.markdown(
-    "<p style='text-align:center;'>Machine Learning Project | Sukkur IBA University</p>",
-    unsafe_allow_html=True
-)
+st.markdown('<div class="title">Job Acceptance Prediction System</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Machine Learning Project | Sukkur IBA University</div>', unsafe_allow_html=True)
 
 st.divider()
 
-# ================= INPUT SECTION =================
+# ================= MAIN CARD =================
+st.markdown('<div class="card">', unsafe_allow_html=True)
+
 st.subheader("📋 Candidate & Job Information")
 
 col1, col2 = st.columns(2)
@@ -104,30 +123,30 @@ if st.button("🔍 Predict Job Acceptance"):
     st.divider()
 
     if result == 1:
-        st.success("✅ Prediction Result: Candidate will ACCEPT the job")
+        st.success("✅ Candidate is likely to ACCEPT the job")
+        st.progress(85)
     else:
-        st.error("❌ Prediction Result: Candidate will REJECT the job")
+        st.error("❌ Candidate is likely to REJECT the job")
+        st.progress(40)
 
-    # ================= EXPLANATION =================
     st.subheader("🧠 Prediction Explanation")
     st.markdown("""
-    This prediction is generated using a **Machine Learning classification model**.
+    The prediction is based on:
+    - Salary & experience balance  
+    - Company reputation  
+    - Work-from-home availability  
+    - Job type and location  
 
-    **Key decision factors include:**
-    - Offered **salary**
-    - Candidate **experience**
-    - **Company rating**
-    - **Work-from-home availability**
-    - **Job type** and **location**
-
-    The model analyzes these parameters together and predicts whether
-    a candidate is likely to **accept or reject** a job offer.
+    The model evaluates these parameters together
+    and produces a final decision.
     """)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= FOOTER =================
 st.markdown("""
 <div class="footer">
-    Developed for Academic Use <br>
+    Developed for Academic Use<br>
     Sukkur IBA University | Machine Learning Project
 </div>
 """, unsafe_allow_html=True)
