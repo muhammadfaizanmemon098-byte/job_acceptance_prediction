@@ -14,47 +14,13 @@ model = joblib.load("job_model.pkl")
 MODEL_ACCURACY = 85
 
 # ================= SIDEBAR =================
-st.sidebar.markdown("""
-<div style="text-align: center; padding: 1rem 0;">
-    <img src="https://i.imgur.com/your-image-url.jpg" 
-         style="width: 120px; height: 120px; border-radius: 50%; 
-                border: 3px solid #667eea; box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-                margin-bottom: 0.5rem;">
-    <h4 style="margin: 0.5rem 0; color: #667eea;">Developer</h4>
-    <p style="margin: 0; font-size: 0.85rem; opacity: 0.8;">ML Engineer</p>
-</div>
-""", unsafe_allow_html=True)
-
 st.sidebar.markdown("## ⚙️ Settings")
 dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=True)
 st.sidebar.markdown("---")
-
-# Accuracy Visualization in Sidebar
 st.sidebar.markdown("### 📊 Model Performance")
-st.sidebar.markdown(f"""
-<div style="text-align: center; padding: 1rem 0;">
-    <div style="position: relative; width: 150px; height: 150px; margin: 0 auto;">
-        <svg width="150" height="150" style="transform: rotate(-90deg);">
-            <circle cx="75" cy="75" r="65" fill="none" stroke="rgba(102, 126, 234, 0.2)" stroke-width="12"/>
-            <circle cx="75" cy="75" r="65" fill="none" stroke="#667eea" stroke-width="12"
-                    stroke-dasharray="408.4" stroke-dashoffset="{408.4 - (408.4 * MODEL_ACCURACY / 100)}"
-                    style="transition: stroke-dashoffset 1s ease-in-out;"/>
-        </svg>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-            <div style="font-size: 2rem; font-weight: 800; color: #667eea;">{MODEL_ACCURACY}%</div>
-            <div style="font-size: 0.75rem; opacity: 0.7;">Accuracy</div>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.sidebar.markdown("### 📈 Statistics")
-col_s1, col_s2 = st.sidebar.columns(2)
-with col_s1:
-    st.metric("Today", "247", "+23")
-with col_s2:
-    st.metric("Total", "1.2K", "+156")
-
+st.sidebar.metric("Accuracy", f"{MODEL_ACCURACY}%", "+5%")
+st.sidebar.markdown("### 📈 Total Predictions")
+st.sidebar.metric("Today", "247", "+23")
 st.sidebar.markdown("---")
 st.sidebar.info("💡 **Tip:** Toggle dark mode for better viewing experience")
 
@@ -111,6 +77,101 @@ st.markdown(f"""
         opacity: 1;
         transform: translateY(0);
     }}
+}}
+
+.developer-section {{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: {card_bg};
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    animation: slideIn 1s ease-out;
+}}
+
+@keyframes slideIn {{
+    from {{
+        opacity: 0;
+        transform: translateX(-50px);
+    }}
+    to {{
+        opacity: 1;
+        transform: translateX(0);
+    }}
+}}
+
+.developer-photo {{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 5px solid {accent};
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+    object-fit: cover;
+    animation: photoFloat 3s ease-in-out infinite;
+    transition: all 0.4s ease;
+}}
+
+.developer-photo:hover {{
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.7);
+}}
+
+@keyframes photoFloat {{
+    0%, 100% {{ transform: translateY(0px); }}
+    50% {{ transform: translateY(-10px); }}
+}}
+
+.developer-info {{
+    text-align: left;
+    flex: 1;
+    max-width: 500px;
+}}
+
+.developer-name {{
+    font-size: 2rem;
+    font-weight: 800;
+    color: {accent};
+    margin-bottom: 0.5rem;
+}}
+
+.developer-title {{
+    font-size: 1.1rem;
+    color: {text};
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}}
+
+.developer-stats {{
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}}
+
+.stat-box {{
+    text-align: center;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 15px;
+    border: 1px solid {accent};
+    flex: 1;
+}}
+
+.stat-number {{
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: {accent};
+    display: block;
+}}
+
+.stat-label {{
+    font-size: 0.9rem;
+    color: {text};
+    opacity: 0.7;
 }}
 
 .logo-wrapper {{
@@ -368,19 +429,41 @@ st.markdown(f"""
     75% {{ transform: translateX(10px); }}
 }}
 
-/* Confidence Gauge */
-.confidence-gauge {{
+/* Circular Progress (Accuracy Visualization) */
+.accuracy-circle {{
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     margin: 2rem auto;
 }}
 
-.confidence-gauge svg {{
+.accuracy-svg {{
     transform: rotate(-90deg);
 }}
 
-.gauge-text {{
+.accuracy-circle-bg {{
+    fill: none;
+    stroke: rgba(102, 126, 234, 0.2);
+    stroke-width: 15;
+}}
+
+.accuracy-circle-progress {{
+    fill: none;
+    stroke: url(#gradient);
+    stroke-width: 15;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 110;
+    animation: progressAnimation 2s ease-out forwards;
+}}
+
+@keyframes progressAnimation {{
+    to {{
+        stroke-dashoffset: 110;
+    }}
+}}
+
+.accuracy-text {{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -388,18 +471,17 @@ st.markdown(f"""
     text-align: center;
 }}
 
-.gauge-value {{
-    font-size: 3rem;
+.accuracy-number {{
+    font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, {accent}, {secondary});
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: {accent};
+    display: block;
 }}
 
-.gauge-label {{
+.accuracy-label {{
     font-size: 0.9rem;
+    color: {text};
     opacity: 0.7;
-    margin-top: 0.5rem;
 }}
 
 /* Progress Bar Enhancement */
@@ -462,21 +544,14 @@ hr {{
     backdrop-filter: blur(20px);
 }}
 
-/* Tooltips Enhancement */
-[data-testid="stTooltipIcon"] {{
-    color: {accent} !important;
-}}
-
-/* Spinner */
-.stSpinner > div {{
-    border-top-color: {accent} !important;
-}}
-
 /* Mobile Responsive */
 @media (max-width: 768px) {{
     .title {{ font-size: 2rem; }}
     .logo {{ width: 100px; height: 100px; }}
     .main-card {{ padding: 1.5rem; }}
+    .developer-section {{ flex-direction: column; text-align: center; }}
+    .developer-info {{ text-align: center; }}
+    .developer-stats {{ justify-content: center; }}
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -490,6 +565,53 @@ st.markdown(f"""
     <div class="title">Job Acceptance Predictor</div>
     <div class="subtitle">🎓 AI-Powered Decision Intelligence System</div>
     <div class="badge">Sukkur IBA University | ML Project 2025</div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# ================= DEVELOPER SECTION =================
+st.markdown("""
+<div class="developer-section">
+    <img class="developer-photo" src="https://i.imgur.com/your-photo-link.jpg" alt="Developer">
+    <div class="developer-info">
+        <div class="developer-name">Your Name</div>
+        <div class="developer-title">Machine Learning Engineer | Data Scientist</div>
+        <div class="developer-stats">
+            <div class="stat-box">
+                <span class="stat-number">85%</span>
+                <span class="stat-label">Model Accuracy</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">1.2K+</span>
+                <span class="stat-label">Predictions</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">247</span>
+                <span class="stat-label">Today</span>
+            </div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ================= ACCURACY VISUALIZATION =================
+st.markdown(f"""
+<div class="accuracy-circle">
+    <svg class="accuracy-svg" width="180" height="180" viewBox="0 0 180 180">
+        <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:{accent};stop-opacity:1" />
+                <stop offset="100%" style="stop-color:{secondary};stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <circle class="accuracy-circle-bg" cx="90" cy="90" r="70"></circle>
+        <circle class="accuracy-circle-progress" cx="90" cy="90" r="70"></circle>
+    </svg>
+    <div class="accuracy-text">
+        <span class="accuracy-number">{MODEL_ACCURACY}%</span>
+        <span class="accuracy-label">Accuracy</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -531,39 +653,19 @@ if predict_button:
 
         st.markdown('<div class="result-card">', unsafe_allow_html=True)
 
-        # Calculate confidence dynamically
         if result == 1:
-            confidence = 85
-            gauge_color = "#10b981"
             st.markdown('<div class="success-badge">✅ High Probability of Job Acceptance</div>', unsafe_allow_html=True)
+            progress_value = 85
+            st.progress(progress_value / 100)
+            st.markdown(f"<p style='text-align: center; font-size: 1.1rem; color: {accent}; font-weight: 600;'>Confidence Level: {progress_value}%</p>", unsafe_allow_html=True)
         else:
-            confidence = 40
-            gauge_color = "#ef4444"
             st.markdown('<div class="error-badge">❌ Low Probability of Job Acceptance</div>', unsafe_allow_html=True)
-
-        # Confidence Gauge Visualization
-        circumference = 2 * 3.14159 * 70
-        offset = circumference - (circumference * confidence / 100)
-        
-        st.markdown(f"""
-        <div class="confidence-gauge">
-            <svg width="200" height="200">
-                <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(102, 126, 234, 0.2)" stroke-width="15"/>
-                <circle cx="100" cy="100" r="70" fill="none" stroke="{gauge_color}" stroke-width="15"
-                        stroke-dasharray="{circumference}" stroke-dashoffset="{offset}"
-                        style="transition: stroke-dashoffset 1.5s ease-in-out;"/>
-            </svg>
-            <div class="gauge-text">
-                <div class="gauge-value">{confidence}%</div>
-                <div class="gauge-label">Confidence</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.progress(confidence / 100)
+            progress_value = 40
+            st.progress(progress_value / 100)
+            st.markdown(f"<p style='text-align: center; font-size: 1.1rem; color: #ef4444; font-weight: 600;'>Confidence Level: {progress_value}%</p>", unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="section-title">🧠 Detailed Analysis</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">🧠 Prediction Analysis</div>', unsafe_allow_html=True)
 
         # Factors Analysis
         col_a, col_b = st.columns(2)
