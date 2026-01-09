@@ -17,11 +17,6 @@ MODEL_ACCURACY = 85
 st.sidebar.markdown("## ⚙️ Settings")
 dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=True)
 st.sidebar.markdown("---")
-st.sidebar.markdown("### 📊 Model Performance")
-st.sidebar.metric("Accuracy", f"{MODEL_ACCURACY}%", "+5%")
-st.sidebar.markdown("### 📈 Total Predictions")
-st.sidebar.metric("Today", "247", "+23")
-st.sidebar.markdown("---")
 st.sidebar.info("💡 **Tip:** Toggle dark mode for better viewing experience")
 
 # ================= THEME COLORS =================
@@ -79,125 +74,33 @@ st.markdown(f"""
     }}
 }}
 
-.developer-section {{
+.profile-section {{
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    margin: 2rem 0;
-    padding: 2rem;
-    background: {card_bg};
-    backdrop-filter: blur(20px);
-    border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    animation: slideIn 1s ease-out;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }}
 
-@keyframes slideIn {{
-    from {{
-        opacity: 0;
-        transform: translateX(-50px);
-    }}
-    to {{
-        opacity: 1;
-        transform: translateX(0);
-    }}
-}}
-
-.developer-photo {{
-    width: 180px;
-    height: 180px;
+.profile-img {{
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border: 5px solid {accent};
-    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
-    object-fit: cover;
-    animation: photoFloat 3s ease-in-out infinite;
-    transition: all 0.4s ease;
-}}
-
-.developer-photo:hover {{
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.7);
-}}
-
-@keyframes photoFloat {{
-    0%, 100% {{ transform: translateY(0px); }}
-    50% {{ transform: translateY(-10px); }}
-}}
-
-.developer-info {{
-    text-align: left;
-    flex: 1;
-    max-width: 500px;
-}}
-
-.developer-name {{
-    font-size: 2rem;
-    font-weight: 800;
-    color: {accent};
-    margin-bottom: 0.5rem;
-}}
-
-.developer-title {{
-    font-size: 1.1rem;
-    color: {text};
-    opacity: 0.8;
-    margin-bottom: 1rem;
-}}
-
-.developer-stats {{
-    display: flex;
-    gap: 2rem;
-    margin-top: 1rem;
-}}
-
-.stat-box {{
-    text-align: center;
-    padding: 1rem;
-    background: rgba(102, 126, 234, 0.1);
-    border-radius: 15px;
-    border: 1px solid {accent};
-    flex: 1;
-}}
-
-.stat-number {{
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: {accent};
-    display: block;
-}}
-
-.stat-label {{
-    font-size: 0.9rem;
-    color: {text};
-    opacity: 0.7;
-}}
-
-.logo-wrapper {{
-    position: relative;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-}}
-
-.logo {{
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.5);
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+    animation: profileFloat 3s ease-in-out infinite;
     transition: all 0.3s ease;
 }}
 
-.logo:hover {{
+.profile-img:hover {{
     transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.7);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.8);
 }}
 
-@keyframes float {{
+@keyframes profileFloat {{
     0%, 100% {{ transform: translateY(0px); }}
-    50% {{ transform: translateY(-15px); }}
+    50% {{ transform: translateY(-10px); }}
 }}
 
 .title {{
@@ -235,6 +138,97 @@ st.markdown(f"""
     font-weight: 600;
     border: 1px solid {accent};
     margin-top: 0.5rem;
+}}
+
+/* Accuracy Visualization */
+.accuracy-container {{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}}
+
+.accuracy-card {{
+    background: {card_bg};
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    border: 2px solid {accent};
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    text-align: center;
+    min-width: 180px;
+    animation: cardPop 0.6s ease-out;
+    transition: all 0.3s ease;
+}}
+
+.accuracy-card:hover {{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+}}
+
+@keyframes cardPop {{
+    0% {{
+        opacity: 0;
+        transform: scale(0.8);
+    }}
+    100% {{
+        opacity: 1;
+        transform: scale(1);
+    }}
+}}
+
+.accuracy-number {{
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, {accent}, {secondary});
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    line-height: 1;
+}}
+
+.accuracy-label {{
+    font-size: 0.9rem;
+    color: {text};
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    font-weight: 600;
+}}
+
+.circular-progress {{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient({accent} {MODEL_ACCURACY * 3.6}deg, rgba(102, 126, 234, 0.2) 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    position: relative;
+    animation: rotateCircle 2s ease-out;
+}}
+
+@keyframes rotateCircle {{
+    from {{ transform: rotate(0deg); }}
+    to {{ transform: rotate(360deg); }}
+}}
+
+.circular-progress::before {{
+    content: '';
+    width: 90px;
+    height: 90px;
+    background: {card_bg};
+    border-radius: 50%;
+    position: absolute;
+}}
+
+.circular-progress-text {{
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: {accent};
 }}
 
 /* Main Card */
@@ -429,61 +423,6 @@ st.markdown(f"""
     75% {{ transform: translateX(10px); }}
 }}
 
-/* Circular Progress (Accuracy Visualization) */
-.accuracy-circle {{
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 2rem auto;
-}}
-
-.accuracy-svg {{
-    transform: rotate(-90deg);
-}}
-
-.accuracy-circle-bg {{
-    fill: none;
-    stroke: rgba(102, 126, 234, 0.2);
-    stroke-width: 15;
-}}
-
-.accuracy-circle-progress {{
-    fill: none;
-    stroke: url(#gradient);
-    stroke-width: 15;
-    stroke-linecap: round;
-    stroke-dasharray: 440;
-    stroke-dashoffset: 110;
-    animation: progressAnimation 2s ease-out forwards;
-}}
-
-@keyframes progressAnimation {{
-    to {{
-        stroke-dashoffset: 110;
-    }}
-}}
-
-.accuracy-text {{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}}
-
-.accuracy-number {{
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: {accent};
-    display: block;
-}}
-
-.accuracy-label {{
-    font-size: 0.9rem;
-    color: {text};
-    opacity: 0.7;
-}}
-
 /* Progress Bar Enhancement */
 .stProgress > div > div > div > div {{
     background: linear-gradient(90deg, {accent}, {secondary}) !important;
@@ -544,52 +483,35 @@ hr {{
     backdrop-filter: blur(20px);
 }}
 
+/* Tooltips Enhancement */
+[data-testid="stTooltipIcon"] {{
+    color: {accent} !important;
+}}
+
+/* Spinner */
+.stSpinner > div {{
+    border-top-color: {accent} !important;
+}}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {{
     .title {{ font-size: 2rem; }}
-    .logo {{ width: 100px; height: 100px; }}
+    .profile-img {{ width: 100px; height: 100px; }}
     .main-card {{ padding: 1.5rem; }}
-    .developer-section {{ flex-direction: column; text-align: center; }}
-    .developer-info {{ text-align: center; }}
-    .developer-stats {{ justify-content: center; }}
+    .profile-section {{ flex-direction: column; gap: 1rem; }}
 }}
 </style>
 """, unsafe_allow_html=True)
 
-# ================= HEADER =================
+# ================= HEADER WITH PROFILE =================
 st.markdown(f"""
 <div class="hero-container">
-    <div class="logo-wrapper">
-        <img class="logo" src="https://tse2.mm.bing.net/th/id/OIP.MF2VbS9hBke5HMm_qbDiEAHaHa?rs=1&pid=ImgDetMain" alt="Logo">
-    </div>
-    <div class="title">Job Acceptance Predictor</div>
-    <div class="subtitle">🎓 AI-Powered Decision Intelligence System</div>
-    <div class="badge">Sukkur IBA University | ML Project 2025</div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("<hr>", unsafe_allow_html=True)
-
-# ================= DEVELOPER SECTION =================
-st.markdown("""
-<div class="developer-section">
-    <img class="developer-photo" src="C:\Users\DELL\Desktop\Faizan.jpeg" alt="Developer">
-    <div class="developer-info">
-        <div class="developer-name">Your Name</div>
-        <div class="developer-title">Machine Learning Engineer | Data Scientist</div>
-        <div class="developer-stats">
-            <div class="stat-box">
-                <span class="stat-number">85%</span>
-                <span class="stat-label">Model Accuracy</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number">1.2K+</span>
-                <span class="stat-label">Predictions</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number">247</span>
-                <span class="stat-label">Today</span>
-            </div>
+    <div class="profile-section">
+        <img class="profile-img" src="https://i.imgur.com/placeholder.jpg" alt="Developer Profile">
+        <div>
+            <div class="title">Job Acceptance Predictor</div>
+            <div class="subtitle">🎓 AI-Powered Decision Intelligence System</div>
+            <div class="badge">Sukkur IBA University | ML Project 2025</div>
         </div>
     </div>
 </div>
@@ -597,20 +519,22 @@ st.markdown("""
 
 # ================= ACCURACY VISUALIZATION =================
 st.markdown(f"""
-<div class="accuracy-circle">
-    <svg class="accuracy-svg" width="180" height="180" viewBox="0 0 180 180">
-        <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:{accent};stop-opacity:1" />
-                <stop offset="100%" style="stop-color:{secondary};stop-opacity:1" />
-            </linearGradient>
-        </defs>
-        <circle class="accuracy-circle-bg" cx="90" cy="90" r="70"></circle>
-        <circle class="accuracy-circle-progress" cx="90" cy="90" r="70"></circle>
-    </svg>
-    <div class="accuracy-text">
-        <span class="accuracy-number">{MODEL_ACCURACY}%</span>
-        <span class="accuracy-label">Accuracy</span>
+<div class="accuracy-container">
+    <div class="accuracy-card">
+        <div class="circular-progress">
+            <div class="circular-progress-text">{MODEL_ACCURACY}%</div>
+        </div>
+        <div class="accuracy-label">📊 Model Accuracy</div>
+    </div>
+    
+    <div class="accuracy-card">
+        <p class="accuracy-number">1,247</p>
+        <div class="accuracy-label">📈 Total Predictions</div>
+    </div>
+    
+    <div class="accuracy-card">
+        <p class="accuracy-number">247</p>
+        <div class="accuracy-label">🔥 Today's Count</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
