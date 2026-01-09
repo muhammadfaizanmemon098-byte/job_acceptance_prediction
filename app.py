@@ -573,7 +573,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # ================= DEVELOPER SECTION =================
 st.markdown("""
 <div class="developer-section">
-    <img class="developer-photo" src="https://i.imgur.com/your-photo-link.jpg" alt="Developer">
+    <img class="developer-photo" src="Faizan.jpeg" alt="Developer">
     <div class="developer-info">
         <div class="developer-name">Your Name</div>
         <div class="developer-title">Machine Learning Engineer | Data Scientist</div>
