@@ -11,16 +11,50 @@ st.set_page_config(
 
 # ================= LOAD MODEL =================
 model = joblib.load("job_model.pkl")
-MODEL_ACCURACY = "85%"
+MODEL_ACCURACY = 85
 
 # ================= SIDEBAR =================
+st.sidebar.markdown("""
+<div style="text-align: center; padding: 1rem 0;">
+    <img src="https://i.imgur.com/your-image-url.jpg" 
+         style="width: 120px; height: 120px; border-radius: 50%; 
+                border: 3px solid #667eea; box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+                margin-bottom: 0.5rem;">
+    <h4 style="margin: 0.5rem 0; color: #667eea;">Developer</h4>
+    <p style="margin: 0; font-size: 0.85rem; opacity: 0.8;">ML Engineer</p>
+</div>
+""", unsafe_allow_html=True)
+
 st.sidebar.markdown("## ⚙️ Settings")
 dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=True)
 st.sidebar.markdown("---")
+
+# Accuracy Visualization in Sidebar
 st.sidebar.markdown("### 📊 Model Performance")
-st.sidebar.metric("Accuracy", MODEL_ACCURACY, "+5%")
-st.sidebar.markdown("### 📈 Total Predictions")
-st.sidebar.metric("Today", "247", "+23")
+st.sidebar.markdown(f"""
+<div style="text-align: center; padding: 1rem 0;">
+    <div style="position: relative; width: 150px; height: 150px; margin: 0 auto;">
+        <svg width="150" height="150" style="transform: rotate(-90deg);">
+            <circle cx="75" cy="75" r="65" fill="none" stroke="rgba(102, 126, 234, 0.2)" stroke-width="12"/>
+            <circle cx="75" cy="75" r="65" fill="none" stroke="#667eea" stroke-width="12"
+                    stroke-dasharray="408.4" stroke-dashoffset="{408.4 - (408.4 * MODEL_ACCURACY / 100)}"
+                    style="transition: stroke-dashoffset 1s ease-in-out;"/>
+        </svg>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+            <div style="font-size: 2rem; font-weight: 800; color: #667eea;">{MODEL_ACCURACY}%</div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">Accuracy</div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.sidebar.markdown("### 📈 Statistics")
+col_s1, col_s2 = st.sidebar.columns(2)
+with col_s1:
+    st.metric("Today", "247", "+23")
+with col_s2:
+    st.metric("Total", "1.2K", "+156")
+
 st.sidebar.markdown("---")
 st.sidebar.info("💡 **Tip:** Toggle dark mode for better viewing experience")
 
@@ -334,6 +368,40 @@ st.markdown(f"""
     75% {{ transform: translateX(10px); }}
 }}
 
+/* Confidence Gauge */
+.confidence-gauge {{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 2rem auto;
+}}
+
+.confidence-gauge svg {{
+    transform: rotate(-90deg);
+}}
+
+.gauge-text {{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}}
+
+.gauge-value {{
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, {accent}, {secondary});
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}}
+
+.gauge-label {{
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}}
+
 /* Progress Bar Enhancement */
 .stProgress > div > div > div > div {{
     background: linear-gradient(90deg, {accent}, {secondary}) !important;
@@ -463,19 +531,39 @@ if predict_button:
 
         st.markdown('<div class="result-card">', unsafe_allow_html=True)
 
+        # Calculate confidence dynamically
         if result == 1:
+            confidence = 85
+            gauge_color = "#10b981"
             st.markdown('<div class="success-badge">✅ High Probability of Job Acceptance</div>', unsafe_allow_html=True)
-            progress_value = 85
-            st.progress(progress_value / 100)
-            st.markdown(f"<p style='text-align: center; font-size: 1.1rem; color: {accent}; font-weight: 600;'>Confidence Level: {progress_value}%</p>", unsafe_allow_html=True)
         else:
+            confidence = 40
+            gauge_color = "#ef4444"
             st.markdown('<div class="error-badge">❌ Low Probability of Job Acceptance</div>', unsafe_allow_html=True)
-            progress_value = 40
-            st.progress(progress_value / 100)
-            st.markdown(f"<p style='text-align: center; font-size: 1.1rem; color: #ef4444; font-weight: 600;'>Confidence Level: {progress_value}%</p>", unsafe_allow_html=True)
+
+        # Confidence Gauge Visualization
+        circumference = 2 * 3.14159 * 70
+        offset = circumference - (circumference * confidence / 100)
+        
+        st.markdown(f"""
+        <div class="confidence-gauge">
+            <svg width="200" height="200">
+                <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(102, 126, 234, 0.2)" stroke-width="15"/>
+                <circle cx="100" cy="100" r="70" fill="none" stroke="{gauge_color}" stroke-width="15"
+                        stroke-dasharray="{circumference}" stroke-dashoffset="{offset}"
+                        style="transition: stroke-dashoffset 1.5s ease-in-out;"/>
+            </svg>
+            <div class="gauge-text">
+                <div class="gauge-value">{confidence}%</div>
+                <div class="gauge-label">Confidence</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.progress(confidence / 100)
 
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="section-title">🧠 Prediction Analysis</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">🧠 Detailed Analysis</div>', unsafe_allow_html=True)
 
         # Factors Analysis
         col_a, col_b = st.columns(2)
