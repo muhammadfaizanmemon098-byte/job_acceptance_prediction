@@ -17,27 +17,10 @@ MODEL_ACCURACY = "85%"
 st.sidebar.markdown("## ⚙️ Settings")
 dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=True)
 st.sidebar.markdown("---")
-
-# Model Performance Visualization
 st.sidebar.markdown("### 📊 Model Performance")
-st.sidebar.metric("Overall Accuracy", MODEL_ACCURACY, "+5%")
-
-# Create a simple bar chart for accuracy
-accuracy_data = {
-    "Training": 87,
-    "Validation": 85,
-    "Testing": 83
-}
-
-st.sidebar.markdown("#### Accuracy Breakdown")
-for label, value in accuracy_data.items():
-    st.sidebar.progress(value / 100, text=f"{label}: {value}%")
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 📈 Usage Statistics")
-st.sidebar.metric("Total Predictions", "1,247", "+23 today")
-st.sidebar.metric("Success Rate", "92%", "+3%")
-st.sidebar.metric("Active Users", "45", "+8")
+st.sidebar.metric("Accuracy", MODEL_ACCURACY, "+5%")
+st.sidebar.markdown("### 📈 Total Predictions")
+st.sidebar.metric("Today", "247", "+23")
 st.sidebar.markdown("---")
 st.sidebar.info("💡 **Tip:** Toggle dark mode for better viewing experience")
 
@@ -427,30 +410,6 @@ hr {{
     .logo {{ width: 100px; height: 100px; }}
     .main-card {{ padding: 1.5rem; }}
 }}
-
-/* Developer Section Styles */
-.dev-image {{
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-    border: 3px solid {accent};
-    transition: all 0.3s ease;
-}}
-
-.dev-image:hover {{
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-}}
-
-/* Sidebar Progress Bars */
-.stProgress > div {{
-    background: rgba(102, 126, 234, 0.2) !important;
-    border-radius: 10px !important;
-}}
-
-.stProgress > div > div > div > div {{
-    background: linear-gradient(90deg, {accent}, {secondary}) !important;
-    border-radius: 10px !important;
-}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -567,34 +526,6 @@ if predict_button:
         """, unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
-
-# ================= DEVELOPER SECTION =================
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown('<div class="main-card">', unsafe_allow_html=True)
-st.markdown('<div class="section-title">👨‍💻 About Developer</div>', unsafe_allow_html=True)
-
-dev_col1, dev_col2 = st.columns([1, 2], gap="large")
-
-with dev_col1:
-    try:
-        st.image("profile.jpg", width=200, use_container_width=False)
-    except:
-        st.info("📸 Profile image not found. Please add 'profile.jpg' in the project folder.")
-
-with dev_col2:
-    st.markdown(f"""
-    <div style='padding: 1rem 0;'>
-        <h3 style='color: {accent}; margin-bottom: 0.5rem;'>Your Name</h3>
-        <p style='color: {text}; opacity: 0.9; font-size: 1rem; line-height: 1.6;'>
-            <strong>📚 Student</strong> - Sukkur IBA University<br>
-            <strong>💼 Program:</strong> Machine Learning & AI<br>
-            <strong>🎓 Project:</strong> Job Acceptance Prediction System<br>
-            <strong>📧 Email:</strong> your.email@iba-suk.edu.pk
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= FOOTER =================
 st.markdown("""
