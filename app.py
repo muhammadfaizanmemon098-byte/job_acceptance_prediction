@@ -531,7 +531,7 @@ if predict_button:
 st.markdown("""
 <div class="footer">
     🎓 <strong>Developed for Academic Excellence</strong><br>
-    Sukkur IBA University | Machine Learning Project 2025<br>
+    Sukkur IBA University | Machine Learning Project 2026<br>
     <br>
     Made with ❤️ using <strong>Streamlit</strong> & <strong>Python</strong><br>
     <small style="opacity: 0.6;">For educational and research purposes only</small>
