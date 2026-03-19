@@ -40,7 +40,7 @@ else:
     accent = "#667eea"
     secondary = "#764ba2"
 
-# ================= ENHANCED CSS =================
+
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
@@ -421,7 +421,7 @@ st.markdown(f"""
     </div>
     <div class="title">Job Acceptance Predictor</div>
     <div class="subtitle">🎓 AI-Powered Decision Intelligence System</div>
-    <div class="badge">Sukkur IBA University | ML Project 2025</div>
+    <div class="badge">Sukkur IBA University | ML Project 2026</div>
 </div>
 """, unsafe_allow_html=True)
 
